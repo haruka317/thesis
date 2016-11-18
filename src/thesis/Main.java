@@ -87,7 +87,10 @@ public class Main {
 			s.calc();
 		}*/
 
+		Virus v = new Virus();
 		city[init].processing = true;
+		city[init].i += v.i;
+		city[init].s -= v.i;
 
 		for(int a = 0; a < 50; a++){
 			for(City c: city){
@@ -144,8 +147,14 @@ public class Main {
 										c.i+(h/2)*c.k3[2],
 										c.r+(h/2)*c.k3[2],
 										t+(h/2));
-
-					//隣接区間をprocessingにする処理
+					/*for(int nc : c.nc){
+						if(city[nc].iR[2] == 30.0){
+							if(city[nc].processing){
+								city[nc].i += c.i;
+								city[nc].s -= c.i
+							}
+						}
+					}*/
 				}else{
 					//飛ばす
 				}

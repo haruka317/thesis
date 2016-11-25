@@ -6,8 +6,9 @@ import java.util.Scanner;
 public class Main {
 
 	public static void main(String[] args) {
-		double h = 0.1;	//刻み幅
+		double h = 1;	//刻み幅
 		double t = 200;	//観察期間
+		double p; //感染確率
 		ArrayList<City> pc = new ArrayList<City>();	//processing = TrueのCityコレクション
 
 		Functions f = new Functions();
@@ -61,41 +62,28 @@ public class Main {
 		int[] c45 = {42,44,46};							city[45] = new City("鹿児島",1648752,c45);
 		int[] c46 = {45};									city[46] = new City("沖縄",1434138,c46);
 
+		ArrayList<Integer> x = new ArrayList<Integer>();
+		int count = 0;
+
 		System.out.println("感染源の都道府県IDを入力してください.(0～46)");
 		@SuppressWarnings("resource")
 		Scanner scan = new Scanner(System.in);
 		int init = scan.nextInt();	//感染源
-
-		//System.out.println(City.cc.get(2));
-
-		/*try{
-			init = scan.nextInt();	//感染源
-			System.out.println(city[init].name);
-			Virus v = new Virus();
-			SIR s = new SIR(city[init],v);
-			s.calc();
-			}catch(InputMismatchException e){
-				System.out.println("適切な数値を入力してください.");
-			}catch(ArrayIndexOutOfBoundsException e){
-				System.out.println("0~46の数値を入力してください.");
-		}*/
-
-		/*
-		Virus v = new Virus();
-		SIR s = new SIR(city[init],v);
-		for(double k = 0; k < t; k += h){
-			s.calc();
-		}*/
 
 		Virus v = new Virus();
 		city[init].processing = true;
 		city[init].i += v.i;
 		city[init].s -= v.i;
 
-		for(int a = 0; a < 50; a++){
+
+		System.out.println("-------計算開始------");
+		for(double k = 0; k < t; k += h){
 			for(City c: city){
+				c.sc.add(c.s);
+				c.ic.add(c.i);
+				c.rc.add(c.r);
 				if(c.processing){
-					//計算
+					//processing = true の都市のみ計算
 					c.s = c.s + (h/6)*(c.k1[0] + 2*c.k2[0] + 2*c.k3[0] + c.k4[0]);
 					c.i = c.i + (h/6)*(c.k1[1] + 2*c.k2[1] + 2*c.k3[1] + c.k4[1]);
 					//r = r + (h/6)*(k1[2] + 2*k2[2] + 2*k3[2] + k4[2]);
@@ -103,7 +91,7 @@ public class Main {
 					c.S = (int) (c.s*c.pop);
 					c.I = (int) (c.i*c.pop);
 					c.R = c.pop - (c.S + c.I);
-					System.out.printf("%8d|%8d|%8d\n",c.S,c.I,c.R);
+					//System.out.printf("%8s|%8d|%8d|%8d\n",c.name,c.S,c.I,c.R);
 
 					c.k1[0] = f.dS(c.s,c.i,c.r,t);
 					c.k1[1] = f.dI(c.s,c.i,c.r,t);
@@ -147,20 +135,38 @@ public class Main {
 										c.i+(h/2)*c.k3[2],
 										c.r+(h/2)*c.k3[2],
 										t+(h/2));
-					/*for(int nc : c.nc){
-						if(city[nc].iR[2] == 30.0){
-							if(city[nc].processing){
-								city[nc].i += c.i;
-								city[nc].s -= c.i
+
+					x.add(count);
+					count++;
+
+					for(int j = 0; j < c.nc.length; j++){
+						p = Math.random();
+						if( p < c.mR[j]){
+							if(!city[c.nc[j]].processing){
+								city[c.nc[j]].processing = true;
+								city[c.nc[j]].i += c.i * 0.01;
+								city[c.nc[j]].s -= c.i * 0.01;
 							}
 						}
-					}*/
+					}
 				}else{
 					//飛ばす
 				}
 			}
 		}
+		System.out.println("-------計算完了------");
+		System.out.println("感染の推移を見たい都道府県IDを入力してください.(0～46)");
+		@SuppressWarnings("resource")
+		Scanner scan2 = new Scanner(System.in);
+		int pl = scan2.nextInt();	//感染源
 
+		int S,I,R;
+		for(int g = 0; g < city[pl].ic.size(); g++){
+			S = (int) (city[pl].sc.get(g) * city[pl].pop);
+			I = (int) (city[pl].ic.get(g) * city[pl].pop);
+			R = city[pl].pop - (S + I);
+			System.out.println(city[pl].name + "|" + S +"|" + I +"|" + R);
+			}
 
 
 
@@ -197,6 +203,26 @@ public class Main {
 			System.out.println(city[1].name + "の感染者人口：" + city[1].sc.get(l));
 			System.out.println(city[1].name + "の感染者人口：" + city[1].ic.get(l));
 			System.out.println(city[1].name + "の回復者人口：" + city[1].rc.get(l));
+		}*/
+
+
+		/*try{
+			init = scan.nextInt();	//感染源
+			System.out.println(city[init].name);
+			Virus v = new Virus();
+			SIR s = new SIR(city[init],v);
+			s.calc();
+			}catch(InputMismatchException e){
+				System.out.println("適切な数値を入力してください.");
+			}catch(ArrayIndexOutOfBoundsException e){
+				System.out.println("0~46の数値を入力してください.");
+		}*/
+
+		/*
+		Virus v = new Virus();
+		SIR s = new SIR(city[init],v);
+		for(double k = 0; k < t; k += h){
+			s.calc();
 		}*/
 
 	}

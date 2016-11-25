@@ -1,6 +1,6 @@
 package thesis;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class City {
@@ -30,11 +30,11 @@ public class City {
 	static int count = 1;	//ID数をカウント
 
 	public static HashMap<Integer, City> cc = new HashMap<Integer, City>();
-	/*
-	ArrayList<Integer> sc ;	//感受性者数の推移を格納する配列
-	ArrayList<Integer> ic ;	//感染者数の推移を格納する配列
-	ArrayList<Integer> rc ;	//回復者数の推移を格納する配列
-	*/
+
+	ArrayList<Double> sc;	//感受性者数の割合の推移を格納する配列
+	ArrayList<Double> ic ;	//感染者数の割合の推移を格納する配列
+	ArrayList<Double> rc ;	//回復者数の割合の推移を格納する配列
+
 
 	/*
 	 * Cityクラスのコンストラクタ
@@ -51,19 +51,23 @@ public class City {
 		this.i = 0.00000;
 		this.r = 0.00;
 
+		double l = nc.length;
 		this.mR = new double[nc.length];
-		Arrays.fill(a, 1/(nc.length));
+		for(int j = 0; j < mR.length; j++){
+			mR[j] = 1/l;
+		}
 		this.iR = new double[nc.length];
+		for(int i = 0; i < iR.length; i++){
+			iR[i] = mR[i] * this.i;
+		}
 
 		this.k1 = new double[3];
 		this.k2 = new double[3];
 		this.k3 = new double[3];
 		this.k4 = new double[3];
-		/*
-		this.sc = new ArrayList<Integer>();
-		this.ic = new ArrayList<Integer>();
-		this.rc = new ArrayList<Integer>();
-		*/
+		this.sc = new ArrayList<Double>();
+		this.ic = new ArrayList<Double>();
+		this.rc = new ArrayList<Double>();
 		cc.put(id, this);	//idとクラスを関連付けてHashMapに格納
 		count++;
 	}

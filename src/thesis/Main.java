@@ -1,6 +1,8 @@
 package thesis;
+
 import java.util.ArrayList;
 import java.util.Scanner;
+
 
 
 public class Main {
@@ -9,6 +11,37 @@ public class Main {
 		double h = 1;	//刻み幅
 		double t = 200;	//観察期間
 		double p; //感染確率
+
+		/*
+		JFrame fr=new JFrame();
+		fr.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		fr.getContentPane().setBackground(Color.WHITE);
+		fr.getContentPane().setLayout(new BorderLayout());
+		final SVGtest wt=new SVGtest();
+		fr.getContentPane().add(wt,BorderLayout.CENTER);
+		JMenuBar bar=new JMenuBar();
+		JMenu menu=new JMenu("File");
+		bar.add(menu);
+		JMenuItem out=new JMenuItem("Output SVG");
+		menu.add(out);
+		out.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				JFileChooser chooser=new JFileChooser();
+				int ret = chooser.showDialog(null, "ファイル選択");
+				if (ret != JFileChooser.APPROVE_OPTION) {return;}
+				File file=chooser.getSelectedFile();
+				wt.outputSVG(file);
+			}
+		});
+		fr.setJMenuBar(bar);
+		fr.setSize(800, 600);
+		fr.setVisible(true);
+
+		Gui frm = new Gui();
+		frm.setVisible(true);
+		*/
+
 
 		Functions f = new Functions();
 		City[] city = new City[47];

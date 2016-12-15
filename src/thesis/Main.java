@@ -37,10 +37,10 @@ public class Main {
 		fr.setJMenuBar(bar);
 		fr.setSize(800, 600);
 		fr.setVisible(true);
-
+		*/
 		Gui frm = new Gui();
 		frm.setVisible(true);
-		*/
+
 
 
 		Functions f = new Functions();
@@ -289,8 +289,9 @@ public class Main {
 			I = (int) (city[pl].ic.get(g) * city[pl].pop);
 			R = city[pl].pop - (S + I);
 			System.out.println(city[pl].name + "|" + S +"|" + I +"|" + R);
-			}
+		}
 	}
+
 }
 
 
